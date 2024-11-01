@@ -1,10 +1,64 @@
+<h1 align="center">🚀 Devika Love Ollama - Agentic AI Engineer 👩‍💻</h1>
 <p align="center">
-  <img src=".assets/devika-avatar.png" alt="Devika Logo" width="250">
+  <img src=".assets/Devika-llama.png" alt="Devika Logo" width="700">
+</p>
+<p align="center">
+  <a href="https://github.com/stitionai">stitionai</a>/
+  <a href="https://github.com/stitionai/devika">devika</a>
 </p>
 
-<h1 align="center">🚀 Devika - Agentic AI Software Engineer 👩‍💻</h1>
+<h1 align="center">🦙 Ollama Ready Docker Compose Version 🐋</h1>
 
-![devika screenshot](.assets/devika-screenshot.png)
+- Make Sure that you have an Ollama server Running.
+- Make Sure that your Ollama server have this Models:
+
+- openchat:7b-v3.5-1210-q5_K_M (4.8GB)
+- mistral-openorca:7b-q5_K_M (4.8GB)
+- qwen:14b-chat-v1.5-q4_K_M (8.6GB)
+
+- install Docker
+```
+wget https://raw.githubusercontent.com/hqnicolas/devika/main/docker.sh
+sudo chmod 777 docker.sh
+sudo ./docker.sh
+```
+- install Docker Compose
+```
+sudo apt-get update
+sudo apt-get install docker-compose-plugin -y
+sudo apt-get install docker-compose -y
+```
+Clone this REPO to `/DATA/Downloads/`
+```
+cd /
+sudo mkdir -p /DATA/Downloads/
+sudo chmod 777 -R /DATA/
+git clone https://github.com/hqnicolas/devika /DATA/Downloads/devika/
+cd /DATA/Downloads/devika/
+
+``` 
+- Create config file `Based on config.toml `
+``` 
+cp sample.config.toml config.toml
+``` 
+[edit the docker compose](https://github.com/hqnicolas/devika/blob/a103ca53fc07717db0dfb6a6ebcd513bc6aadac0/docker-compose.yaml#L11) to point to your ollama server url
+``` 
+sudo docker compose build
+sudo docker compose up
+```
+- Use DuckDuckGo Search
+
+```
+# to the azure gui's:
+BING = "https://api.bing.microsoft.com/v7.0/search"
+``` 
+- All Yor Resulting Projects Will be Released on this folder:
+```
+/DATA/Downloads/devikaprojects/
+```
+
+
+![devika screenshot](.assets/devika-screenshot.png) 
 
 > [!IMPORTANT]  
 > This project is currently in a very early development/experimental stage. There are a lot of unimplemented/broken features at the moment. Contributions are welcome to help out with the progress!
@@ -14,13 +68,17 @@
 - [About](#about)
 - [Key Features](#key-features)
 - [System Architecture](#system-architecture)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
 - [Getting Started](#getting-started)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-  - [How to use](#how-to-use)
 - [Configuration](#configuration)
+- [Under The Hood](#under-the-hood)
+  - [AI Planning and Reasoning](#ai-planning-and-reasoning)
+  - [Keyword Extraction](#keyword-extraction)
+  - [Browser Interaction](#browser-interaction)
+  - [Code Writing](#code-writing)
+- [Community Discord Server](#community-discord-server)
 - [Contributing](#contributing)
-- [Help and Support](#help-and-support)
 - [License](#license)
 
 ## About
@@ -38,7 +96,7 @@ https://github.com/stitionai/devika/assets/26198477/cfed6945-d53b-4189-9fbe-6696
 
 ## Key Features
 
-- 🤖 Supports **Claude 3**, **GPT-4**, **Gemini**, **Mistral** , **Groq** and **Local LLMs** via [Ollama](https://ollama.com). For optimal performance: Use the **Claude 3** family of models.
+- 🤖 Supports **Claude 3**, **GPT-4**, **GPT-3.5**, and **Local LLMs** via [Ollama](https://ollama.com). For optimal performance: Use the **Claude 3** family of models.
 - 🧠 Advanced AI planning and reasoning capabilities
 - 🔍 Contextual keyword extraction for focused research
 - 🌐 Seamless web browsing and information gathering
@@ -50,26 +108,54 @@ https://github.com/stitionai/devika/assets/26198477/cfed6945-d53b-4189-9fbe-6696
 
 ## System Architecture
 
-Read [**README.md**](docs/architecture) for the detailed documentation.
+Devika's system architecture consists of the following key components:
 
+1. **User Interface**: A web-based chat interface for interacting with Devika, viewing project files, and monitoring the agent's state.
+2. **Agent Core**: The central component that orchestrates the AI planning, reasoning, and execution process. It communicates with various sub-agents and modules to accomplish tasks.
+3. **Large Language Models**: Devika leverages state-of-the-art language models like **Claude**, **GPT-4**, and **Local LLMs via Ollama** for natural language understanding, generation, and reasoning.
+4. **Planning and Reasoning Engine**: Responsible for breaking down high-level objectives into actionable steps and making decisions based on the current context.
+5. **Research Module**: Utilizes keyword extraction and web browsing capabilities to gather relevant information for the task at hand.
+6. **Code Writing Module**: Generates code based on the plan, research findings, and user requirements. Supports multiple programming languages.
+7. **Browser Interaction Module**: Enables Devika to navigate websites, extract information, and interact with web elements as needed.
+8. **Knowledge Base**: Stores and retrieves project-specific information, code snippets, and learned knowledge for efficient access.
+9. **Database**: Persists project data, agent states, and configuration settings.
 
-## Getting Started
+Read [**ARCHITECTURE.md**](https://github.com/stitionai/devika/blob/main/ARCHITECTURE.md) for the detailed documentation.
 
-### Requirements
+## Quick Start
+
+The easiest way to run the project locally:
+
+1. Install `uv` - Python Package manager (https://github.com/astral-sh/uv)
+2. Install `bun` - JavaScript runtime (https://bun.sh/docs/installation)
+3. Install and setup `Ollama` (https://ollama.com/) (if you don't want to use the local models then you can skip this step)
+
+For ollama you need to install the [models](https://ollama.com/models)<br>
+For API models, configure the API keys via setting page in UI. <br><br>
+
+Then execute the following set of command:
+
 ```
-Version's requirements
-  - Python >= 3.10 and < 3.12
-  - NodeJs >= 18
-  - bun
+ollama serve
+git clone https://github.com/stitionai/devika.git
+cd devika/
+uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
+playwright install --with-deps
+cd ui/
+bun install
+bun run start --host
+cd ..
+python3 devika.py
 ```
 
-- Install uv - Python Package manager [download](https://github.com/astral-sh/uv)
-- Install bun - JavaScript runtime [download](https://bun.sh/docs/installation)
-- For ollama [ollama setup guide](docs/Installation/ollama.md) (optinal: if you don't want to use the local models then you can skip this step)
-- For API models, configure the API keys via setting page in UI.
+Docker images will be released soon. :raised_hands:
 
-
-### Installation
+## Installation
+Devika requires the following things as dependencies:
+- Ollama (follow the instructions here to install it: [https://ollama.com/](https://ollama.com/))
+- Bun (follow the instructions here to install it: [https://bun.sh/](https://bun.sh/))
 
 To install Devika, follow these steps:
 
@@ -81,45 +167,36 @@ To install Devika, follow these steps:
    ```bash
    cd devika
    ```
-3. Create a virtual environment and install the required dependencies (you can use any virtual environment manager):
+3. Create a virtual environment and install the required dependencies:
    ```bash
    uv venv
-   
-   # On macOS and Linux.
-   source .venv/bin/activate
-
-   # On Windows.
-   .venv\Scripts\activate
-
    uv pip install -r requirements.txt
    ```
-4. Install the playwright for browsering capabilities:
+4. Install the required dependencies:
    ```bash
+   pip install -r requirements.txt
    playwright install --with-deps # installs browsers in playwright (and their deps) if required
    ```
-5. Start the Devika server:
+5. Set up the necessary API keys and  [Configuration](#configuration) 
+6. Start the Devika server:
    ```bash
    python devika.py
    ```
-6. if everything is working fine, you see the following output:
-   ```bash
-   root: INFO   : Devika is up and running!
-   ```
-7. Now, for frontend, open a new terminal and navigate to the `ui` directory:
+7. Compile and run the UI server:
    ```bash
    cd ui/
    bun install
-   bun run start
+   bun run dev
    ```
-8. Access the Devika web interface by opening a browser and navigating to `http://127.0.0.1:3001`
+8. Access the Devika web interface by opening a browser and navigating to `http://127.0.0.1:3000`.
 
-### how to use
+## Getting Started
 
 To start using Devika, follow these steps:
 
 1. Open the Devika web interface in your browser.
-2. To create a project, click on 'select project' and then click on 'new project'.
-3. Select the search engine and model configuration for your project.
+2. Create a new project by clicking on the "New Project" button and providing a name for your project.
+3. Select the desired programming language and model configuration for your project.
 4. In the chat interface, provide a high-level objective or task description for Devika to work on.
 5. Devika will process your request, break it down into steps, and start working on the task.
 6. Monitor Devika's progress, view generated code, and provide additional guidance or feedback as needed.
@@ -132,35 +209,96 @@ Devika requires certain configuration settings and API keys to function properly
 
 when you first time run Devika, it will create a `config.toml` file for you in the root directory. You can configure the following settings in the settings page via UI:
 
+- STORAGE
+   - `SQLITE_DB`: The path to the SQLite database file for storing Devika's data.
+   - `SCREENSHOTS_DIR`: The directory where screenshots captured by Devika will be stored.
+   - `PDFS_DIR`: The directory where PDF files processed by Devika will be stored.
+   - `PROJECTS_DIR`: The directory where Devika's projects will be stored.
+   - `LOGS_DIR`: The directory where Devika's logs will be stored.
+   - `REPOS_DIR`: The directory where Git repositories cloned by Devika will be stored.
+   - `WEB_SEARCH`: This determines the default web search method for browsing the web. Accepted values are: google, bing, or ddgs.
+
 - API KEYS
    - `BING`: Your Bing Search API key for web searching capabilities.
    - `GOOGLE_SEARCH`: Your Google Search API key for web searching capabilities.
-   - `GOOGLE_SEARCH_ENGINE_ID`: Your Google Search Engine ID for web searching using Google.
+   - `GOOGLE_SEARCH_ENGINE_ID`: Your Google Search Engine Id for web searching using google.
    - `OPENAI`: Your OpenAI API key for accessing GPT models.
    - `GEMINI`: Your Gemini API key for accessing Gemini models.
    - `CLAUDE`: Your Anthropic API key for accessing Claude models.
    - `MISTRAL`: Your Mistral API key for accessing Mistral models.
    - `GROQ`: Your Groq API key for accessing Groq models.
    - `NETLIFY`: Your Netlify API key for deploying and managing web projects.
+   
+Make sure to keep your API keys secure and do not share them publicly.
 
-- API_ENDPOINTS
-   - `BING`: The Bing API endpoint for web searching.
-   - `GOOGLE`: The Google API endpoint for web searching.
-   - `OLLAMA`: The Ollama API endpoint for accessing Local LLMs.
-   - `OPENAI`: The OpenAI API endpoint for accessing OpenAI models.
+### Configuring web search method
 
-Make sure to keep your API keys secure and do not share them publicly. For setting up the Bing and Google search API keys, follow the instructions in the [search engine setup](docs/Installation/search_engine.md)
+Devika currently supports Bing, Google, and DuckDuckGo for web searches. You can configure the web search method via UI.
 
+## Under The Hood
+
+Let's dive deeper into some of the key components and techniques used in Devika:
+
+### AI Planning and Reasoning
+
+Devika employs advanced AI planning and reasoning algorithms to break down high-level objectives into actionable steps. The planning process involves the following stages:
+
+1. **Objective Understanding**: Devika analyzes the given objective or task description to understand the user's intent and requirements.
+2. **Context Gathering**: Relevant context is collected from the conversation history, project files, and knowledge base to inform the planning process.
+3. **Step Generation**: Based on the objective and context, Devika generates a sequence of high-level steps to accomplish the task.
+4. **Refinement and Validation**: The generated steps are refined and validated to ensure their feasibility and alignment with the objective.
+5. **Execution**: Devika executes each step in the plan, utilizing various sub-agents and modules as needed.
+
+The reasoning engine constantly evaluates the progress and makes adjustments to the plan based on new information or feedback received during execution.
+
+### Keyword Extraction
+
+To enable focused research and information gathering, Devika employs keyword extraction techniques. The process involves the following steps:
+
+1. **Preprocessing**: The input text (objective, conversation history, or project files) is preprocessed by removing stop words, tokenizing, and normalizing the text.
+2. **Keyword Identification**: Devika uses the BERT (Bidirectional Encoder Representations from Transformers) model to identify important keywords and phrases from the preprocessed text. BERT's pre-training on a large corpus allows it to capture semantic relationships and understand the significance of words in the given context.
+3. **Keyword Ranking**: The identified keywords are ranked based on their relevance and importance to the task at hand. Techniques like TF-IDF (Term Frequency-Inverse Document Frequency) and TextRank are used to assign scores to each keyword.
+4. **Keyword Selection**: The top-ranked keywords are selected as the most relevant and informative for the current context. These keywords are used to guide the research and information gathering process.
+
+By extracting contextually relevant keywords, Devika can focus its research efforts and retrieve pertinent information to assist in the task completion.
+
+### Browser Interaction
+
+Devika incorporates browser interaction capabilities to navigate websites, extract information, and interact with web elements. The browser interaction module leverages the Playwright library to automate web interactions. The process involves the following steps:
+
+1. **Navigation**: Devika uses Playwright to navigate to specific URLs or perform searches based on the keywords or requirements provided.
+2. **Element Interaction**: Playwright allows Devika to interact with web elements such as clicking buttons, filling forms, and extracting text from specific elements.
+3. **Page Parsing**: Devika parses the HTML structure of the web pages visited to extract relevant information. It uses techniques like CSS selectors and XPath to locate and extract specific data points.
+4. **JavaScript Execution**: Playwright enables Devika to execute JavaScript code within the browser context, allowing for dynamic interactions and data retrieval.
+5. **Screenshot Capture**: Devika can capture screenshots of the web pages visited, which can be useful for visual reference or debugging purposes.
+
+The browser interaction module empowers Devika to gather information from the web, interact with online resources, and incorporate real-time data into its decision-making and code generation processes.
+
+### Code Writing
+
+Devika's code writing module generates code based on the plan, research findings, and user requirements. The process involves the following steps:
+
+1. **Language Selection**: Devika identifies the programming language specified by the user or infers it based on the project context.
+2. **Code Structure Generation**: Based on the plan and language-specific patterns, Devika generates the high-level structure of the code, including classes, functions, and modules.
+3. **Code Population**: Devika fills in the code structure with specific logic, algorithms, and data manipulation statements. It leverages the research findings, code snippets from the knowledge base, and its own understanding of programming concepts to generate meaningful code.
+4. **Code Formatting**: The generated code is formatted according to the language-specific conventions and best practices to ensure readability and maintainability.
+5. **Code Review and Refinement**: Devika reviews the generated code for syntax errors, logical inconsistencies, and potential improvements. It iteratively refines the code based on its own analysis and any feedback provided by the user.
+
+Devika's code writing capabilities enable it to generate functional and efficient code in various programming languages, taking into account the specific requirements and context of each project.
+
+# Community Discord Server
+
+We have a Discord server for the Devika community, where you can connect with other users, share your experiences, ask questions, and collaborate on the project. To join the server, please follow these guidelines:
+
+- Be respectful: Treat all members of the community with kindness and respect. Harassment, hate speech, and other forms of inappropriate behavior will not be tolerated.
+- Contribute positively: Share your ideas, insights, and feedback to help improve Devika. Offer assistance to other community members when possible.
+- Maintain privacy: Respect the privacy of others and do not share personal information without their consent.
+
+To join the Devika community Discord server, [click here](https://discord.gg/CYRp43878y).
 
 ## Contributing
 
 We welcome contributions to enhance Devika's capabilities and improve its performance. To contribute, please see the [`CONTRIBUTING.md`](CONTRIBUTING.md) file for steps.
-
-## Help and Support
-
-If you have any questions, feedback, or suggestions, please feel free to reach out to us. you can raise an issue in the [issue tracker](https://github.com/stitionai/devika/issues) or join the [discussions](https://github.com/stitionai/devika/discussions) for general discussions.
-
-We also have a Discord server for the Devika community, where you can connect with other users, share your experiences, ask questions, and collaborate on the project. To join the Devika community Discord server, [click here](https://discord.gg/CYRp43878y).
 
 ## License
 
